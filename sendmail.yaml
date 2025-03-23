@@ -1,6 +1,6 @@
 openapi: 3.0.4
 info:
-  title: Microsoft Graph API SendMail
+  title: SendMail
   version: 0.0.0
   x-ai-description: Use Microsoft Graph to send emails
 servers:
