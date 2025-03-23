@@ -1,0 +1,89 @@
+openapi: 3.0.4
+info:
+  title: Microsoft Graph API SendMail
+  version: 0.0.0
+  x-ai-description: Use Microsoft Graph to send emails
+servers:
+  - url: https://graph.microsoft.com/v1.0
+    description: Microsoft Graph API
+paths:
+  /me/SendMail:
+    post:
+      description: Send an email
+      operationId: SendMail
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - message
+              type: object
+              properties:
+                message:
+                  required:
+                    - toRecipients
+                    - subject
+                    - body
+                  type: object
+                  properties:
+                    toRecipients:
+                      type: array
+                      items:
+                        required:
+                          - emailAddress
+                        type: object
+                        properties:
+                          emailAddress:
+                            required:
+                              - address
+                            type: object
+                            properties:
+                              address:
+                                type: string
+                    subject:
+                      type: string
+                    body:
+                      required:
+                        - contentType
+                        - content
+                      type: object
+                      properties:
+                        contentType:
+                          type: string
+                        content:
+                          type: string
+        required: true
+      responses:
+        '202':
+          description: The request has been accepted.
+      x-ai-reasoning-instructions:
+        - 'Send an email on behalf of the current user using a JSON Structure like this:'
+        - '        {'
+        - '          "message": {'
+        - '            "subject": "Meet for lunch?",'
+        - '            "body": {'
+        - '              "contentType": "Text",'
+        - '              "content": "The new cafeteria is open."'
+        - '            },'
+        - '            "toRecipients": ['
+        - '              {'
+        - '                "emailAddress": {'
+        - '                  "address": "joe@example.com"'
+        - '              }]'
+        - '            }'
+        - '          }'
+components:
+ securitySchemes:
+    GraphAuth:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize
+          tokenUrl: https://login.microsoftonline.com/organizations/oauth2/v2.0/token
+          refreshUrl: https://login.microsoftonline.com/organizations/oauth2/v2.0/token
+          scopes:
+            Mail.Send: ''
+      x-ai-auth-reference-id: OGNlYTAyZWMtOTc4OC00YmFjLWExOWItM2U3ODJhM2U5YmIwIyMxNGRkMDc3OS02YjdlLTRlMGMtOGNlYS0wNDBiYmMyY2EyOGY=
+security:
+  - GraphAuth:
+      - Mail.Send
