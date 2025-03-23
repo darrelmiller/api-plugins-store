@@ -10,8 +10,8 @@
     ],
     "apis": [
         {
-            "name": "Send mail via Microsoft Graph",
-            "description": "Tasks via Microsoft Graph",
+            "name": "Graph Sendmail",
+            "description": "Send Email via Microsoft Graph",
             "baseUrl": "https://graph.microsoft.com",
             "properties": [
                 {
